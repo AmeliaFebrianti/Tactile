@@ -98,7 +98,7 @@ body{background:var(--bg); color: var(--dark); display: flex; align-items: cente
         <button type="submit" class="btn-primary">Masuk</button>
     </form>
 
-    <a href="Home.html" class="back-link">← Kembali ke Beranda</a>
+    <a href="index.html" class="back-link">← Kembali ke Beranda</a>
 </div>
 
 <script>
@@ -110,7 +110,7 @@ body{background:var(--bg); color: var(--dark); display: flex; align-items: cente
         
         // Redirect ke halaman sebelumnya (jika ada param 'redirect') atau ke Home
         const urlParams = new URLSearchParams(window.location.search);
-        const redirect = urlParams.get('redirect') || 'Home.html';
+        const redirect = urlParams.get('redirect') || 'index.html';
         
         window.location.href = redirect;
     });
