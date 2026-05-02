@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tactile Studio</title>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Space+Grotesk:wght@600;800&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #fdfaf5;
+      --dark: #1a1a1a;
+      --accent: #d4a373;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans';
+    }
+
+    body {
+      background: var(--bg);
+    }
+
+    /* HEADER */
+    header {
+      padding: 1.5rem 8%;
+      background: rgba(253, 250, 245, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 5000;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Space Grotesk';
+      font-weight: 800;
+      font-size: 1.8rem;
+      letter-spacing: -0.5px;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 600;
+      font-size: 1.05rem;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background-color: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .cart-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .cart-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      color: white;
+      background: var(--dark);
+      padding: 0.6rem 1.2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .cart-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(212, 163, 115, 0.4);
+    }
+
+    .cart-badge {
+      background: var(--accent);
+      color: white;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 800;
+      margin-left: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .cart-btn:hover .cart-badge {
+      background: white;
+      color: var(--accent);
+    }
+
+    /* HERO */
+    .hero {
+      display: grid;
+      grid-template-columns: 0.5fr 0.5fr;
+      gap: 4rem;
+      padding: 3rem 10%;
+    }
+
+    .kb-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 30px;
+    }
+
+    #kb-image {
+      width: 100%;
+      border-radius: 20px;
+    }
+
+    .swatch {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      cursor: pointer;
+      border: 3px solid transparent;
+    }
+
+    .swatch.active {
+      border-color: black;
+    }
+
+    .swatch-box {
+      display: flex;
+      gap: 1rem;
+      margin-top: 20px;
+    }
+
+    /* KATEGORI SHOP */
+    .shop-categories {
+      padding: 1px 20% 1px;
+    }
+    .category-section {
+      margin-bottom: 10px;
+    }
+    .category-title {
+      font-family: 'Space Grotesk';
+      font-size: 2.2rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid rgba(0,0,0,0.05);
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .product-card {
+      background: white;
+      border-radius: 24px;
+      padding: 1.5rem;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+      display: flex;
+      flex-direction: column;
+    }
+    .product-card:hover {
+      transform: translateY(-12px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    }
+    .product-img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      aspect-ratio: 1;
+      object-fit: cover;
+    }
+    .product-info {
+      flex: 1;
+    }
+    .product-title {
+      font-family: 'Space Grotesk';
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+    }
+    .product-price {
+      color: var(--accent);
+      font-weight: 800;
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+    .btn-card-add {
+      width: 100%;
+      padding: 12px;
+      background: var(--dark);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-top: auto;
+    }
+    .btn-card-add:hover {
+      background: var(--accent);
+    }
+    .card-swatch-box {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 1.5rem;
+    }
+    .card-swatch {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: 0.2s;
+    }
+    .card-swatch:hover, .card-swatch.active {
+      transform: scale(1.1);
+      border-color: var(--dark);
+    }
+    .btn-add-cart {
+      margin-top: 25px;
+      padding: 15px 30px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 20px rgba(212, 163, 115, 0.3);
+    }
+    .btn-add-cart:hover {
+      transform: translateY(-3px);
+      background: var(--dark);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+    #toast {
+      visibility: hidden; min-width: 250px; background-color: var(--dark);
+      color: #fff; text-align: center; border-radius: 8px; padding: 16px;
+      position: fixed; z-index: 1000; left: 50%; bottom: 30px;
+      transform: translateX(-50%); font-weight: 600; font-family: 'Plus Jakarta Sans';
+    }
+    #toast.show {
+      visibility: visible;
+      animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    }
+    @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+    @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <nav>
+      <div class="logo">TACTILE<span>.</span></div>
+      <ul class="nav-links">
+        <li><a href="Home.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="costume.html">Custome</a></li>
+        <li><a href="desain.html">Desain</a></li>
+      </ul>
+      <div class="cart-container">
+        <a href="keranjang.html" class="cart-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          Keranjang
+          <span class="cart-badge" id="cartBadge">0</span>
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="kb-card">
+      <img src="keyboard1.jpeg" id="kb-image">
+    </div>
+
+    <div>
+      <h1>BEST SELLER PRODUCT</h1>
+      <h2 id="title">Dark Ocean Keyboard</h2>
+
+      <div class="swatch-box">
+        <div class="swatch active" style="background:#2c3e50"
+          onclick="updateKB('keyboard1.jpeg','Dark Ocean Keyboard','2.399.000',this)"></div>
+
+        <div class="swatch" style="background:#ffb7c5"
+          onclick="updateKB('keyboardpink.jpeg','Strawberry Keyboard','1.699.000',this)"></div>
+
+        <div class="swatch" style="background:#7cade6"
+          onclick="updateKB('cute custome.webp','Cute Custome','4.030.000',this)"></div>
+      </div>
+      <br>
+      <button class="btn-add-cart" onclick="addToCart()">🛒 Masukkan Keranjang</button>
+    </div>
+  </section>
+
+  <!-- KATEGORI SHOP -->
+  <section class="shop-categories">
+    
+    <div class="category-section">
+      <h2 class="category-title">60% Layout</h2>
+      <div class="product-grid">
+        <div class="product-card">
+          <img src="60-white.png" alt="Pure White 60%" class="product-img">
+          <div class="product-info">
+            <h3 class="product-title">Pure White 60%</h3>
+            <p class="product-price">Rp 1.499.000</p>
+            <div class="card-swatch-box">
+              <div class="card-swatch active" style="background:#ffffff; border:1px solid #ddd;" onclick="updateCardKB(this, '60-white.png', 'Pure White 60%', '1.499.000', 1499000)"></div>
+              <div class="card-swatch" style="background:#ffb7c5" onclick="updateCardKB(this, 'keyboardpink.jpeg', 'Strawberry 60%', '1.699.000', 1699000)"></div>
+              <div class="card-swatch" style="background:#f3e5ab" onclick="updateCardKB(this, 'btr.avif', 'Butter 60%', '1.699.000', 1699000)"></div>
+            </div>
+          </div>
+          <button class="btn-card-add" onclick="addToCartItem('Pure White 60%', 1499000, '60-white.png')">🛒 Masukkan Keranjang</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="category-section">
+      <h2 class="category-title">Tenkeyless (TKL)</h2>
+      <div class="product-grid">
+        <div class="product-card">
+          <img src="tkl-black.png" alt="Stealth TKL" class="product-img">
+          <div class="product-info">
+            <h3 class="product-title">Stealth TKL</h3>
+            <p class="product-price">Rp 2.199.000</p>
+            <div class="card-swatch-box">
+              <div class="card-swatch active" style="background:#1a1a1a" onclick="updateCardKB(this, 'tkl-black.png', 'Stealth TKL', '2.199.000', 2199000)"></div>
+              <div class="card-swatch" style="background:#2c3e50" onclick="updateCardKB(this, 'keyboard1.jpeg', 'Dark Ocean TKL', '2.399.000', 2399000)"></div>
+            </div>
+          </div>
+          <button class="btn-card-add" onclick="addToCartItem('Stealth TKL', 2199000, 'tkl-black.png')">🛒 Masukkan Keranjang</button>
+        </div>
+      </div>
+    </div>
+
+     <div class="category-section">
+      <h2 class="category-title">Full Size / Retro</h2>
+      <div class="product-grid">
+        <div class="product-card">
+          <img src="full-retro.png" alt="Classic Retro Full" class="product-img">
+          <div class="product-info">
+            <h3 class="product-title">Classic Retro Full</h3>
+            <p class="product-price">Rp 2.899.000</p>
+            <div class="card-swatch-box">
+              <div class="card-swatch active" style="background:#d3c6a6" onclick="updateCardKB(this, 'full-retro.png', 'Classic Retro Full', '2.899.000', 2899000)"></div>
+            </div>
+          </div>
+          <button class="btn-card-add" onclick="addToCartItem('Classic Retro Full', 2899000, 'full-retro.png')">🛒 Masukkan Keranjang</button>
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="category-section">
+      <h2 class="category-title">Custome</h2>
+      <div class="product-grid">
+        <div class="product-card">
+          <img src="cute custome.webp" alt="Cute Custome" class="product-img">
+          <div class="product-info">
+            <h3 class="product-title">Cute Custome</h3>
+            <p class="product-price">Rp 4.030.000</p>
+            <div class="card-swatch-box">
+              <div class="card-swatch active" style="background:#7fb2e8" onclick="updateCardKB(this, 'cute costume.webp','2.899.000', 4030000)"></div>
+            </div>
+          </div>
+          <button class="btn-card-add" onclick="addToCartItem('Cute Custome', 4030000, 'cute custome.webp')">🛒 Masukkan Keranjang</button>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast">✅ Berhasil dimasukkan ke keranjang!</div>
+
+  <script>
+    // UPDATE CART BADGE
+    function updateCartBadge() {
+        let cart = JSON.parse(localStorage.getItem('tactileCart')) || [];
+        const badge = document.getElementById('cartBadge');
+        if(badge) badge.innerText = cart.length;
+    }
+    updateCartBadge();
+
+    function addToCart() {
+        const title = document.getElementById('title').innerText;
+        const priceStr = document.getElementById('price').innerText;
+        const price = parseInt(priceStr.replace(/[^0-9]/g, ''));
+        const image = document.getElementById('kb-image').src;
+
+        let cart = JSON.parse(localStorage.getItem('tactileCart')) || [];
+        cart.push({ title, price, image });
+        localStorage.setItem('tactileCart', JSON.stringify(cart));
+        
+        updateCartBadge();
+        showToast("✅ " + title + " dimasukkan ke keranjang!");
+    }
+
+    function showToast(msg) {
+        var x = document.getElementById("toast");
+        x.innerText = msg;
+        x.className = "show";
+        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+    }
+
+    function addToCartItem(title, price, image) {
+        let cart = JSON.parse(localStorage.getItem('tactileCart')) || [];
+        cart.push({ title, price, image });
+        localStorage.setItem('tactileCart', JSON.stringify(cart));
+        
+        updateCartBadge();
+        showToast("✅ " + title + " dimasukkan ke keranjang!");
+    }
+
+    // HERO
+    function updateKB(imgSrc, title, price, el) {
+      document.getElementById('kb-image').src = imgSrc;
+      document.getElementById('title').innerText = title;
+      document.getElementById('price').innerText = 'Rp ' + price;
+      document.querySelectorAll('.hero .swatch').forEach(s => s.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    // CARD SWATCH
+    function updateCardKB(btn, imgSrc, title, priceFormatted, priceInt) {
+        const card = btn.closest('.product-card');
+        card.querySelector('.product-img').src = imgSrc;
+        card.querySelector('.product-title').innerText = title;
+        card.querySelector('.product-price').innerText = 'Rp ' + priceFormatted;
+        
+        card.querySelectorAll('.card-swatch').forEach(s => s.classList.remove('active'));
+        btn.classList.add('active');
+
+        const addBtn = card.querySelector('.btn-card-add');
+        addBtn.setAttribute('onclick', `addToCartItem('${title}', ${priceInt}, '${imgSrc}')`);
+    }
+  </script>
+
+</body>
+
+</html>
